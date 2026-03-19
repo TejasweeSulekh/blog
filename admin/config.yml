@@ -1,4 +1,3 @@
-local_backend: true
 backend:
   name: github
   repo: TejasweeSulekh/blog-source
@@ -15,6 +14,8 @@ collections:
     label: "Public Transmissions"
     folder: "src/content/posts"
     create: true
+    nested:
+      depth: 3
     slug: "{{slug}}"
     extension: "mdx"
     format: "frontmatter"
@@ -36,6 +37,8 @@ collections:
     label: "Encrypted Vault Logs"
     folder: "src/content/vault"
     create: true
+    nested:
+      depth: 3
     slug: "{{slug}}"
     extension: "mdx"
     format: "frontmatter"
