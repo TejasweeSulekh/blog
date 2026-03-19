@@ -43,12 +43,15 @@ collections:
     extension: "mdx"
     format: "frontmatter"
     fields:
-      - {label: "Vault Entry Title", name: "title", widget: "string"}
-      - {label: "Category", name: "category", widget: "string", default: "classified"}
-      - {label: "System Description", name: "description", widget: "text"}
+      - {label: "Transmission Title", name: "title", widget: "string"}
+      - {label: "Category", name: "category", widget: "select", options: ["projects", "self-projects", "log", "transmissions"], default: "log", hint: "Projects appear in the Dashboard highlight. Logs appear in the lists below."}
+      - {label: "System Description", name: "description", widget: "text", hint: "A punchy 1-2 sentence summary for SEO and preview cards."}
       - {label: "Timestamp", name: "date", widget: "datetime"}
-      - {label: "Author ID", name: "author", widget: "string", default: "ROOT"}
-      - {label: "Cover Image", name: "coverImage", widget: "image", required: false}
-      - {label: "Tech Stack / Tags", name: "tags", widget: "list", required: false}
+      - {label: "Author ID", name: "author", widget: "string", default: "SYS_ADMIN"}
+      - {label: "Cover Image", name: "coverImage", widget: "image", required: false, hint: "Upload an image. It will auto-apply the grayscale-to-color terminal effect."}
+      - {label: "Tech Stack / Tags", name: "tags", widget: "list", required: false, hint: "Used for the grep filtering system."}
       - {label: "Read Time (Minutes)", name: "readTime", widget: "number", value_type: "int", required: false}
+      - {label: "Preview Code (Terminal UI string)", name: "previewCode", widget: "text", required: false, hint: "The snippet that shows up in the Bento Dashboard code box."}
+      - {label: "Project ID", name: "projectId", widget: "string", required: false, hint: "If this is a PROJECT, give it a unique ID (e.g., 'fraud-system')."}
+      - {label: "Related Project", name: "relatedProject", widget: "string", required: false, hint: "If this is a LOG, type the Project ID it belongs to so they link together."}
       - {label: "Payload / Markdown Body", name: "body", widget: "markdown"}
