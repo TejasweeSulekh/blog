@@ -1,22 +1,19 @@
 backend:
   name: github
   repo: TejasweeSulekh/blog
+  # IMPORTANT: Change this to "master" if your GitHub repo uses master!
   branch: main 
-  use_graphql: true
+  use_graphql: false # Turned off to ensure reliable fetching
   base_url: https://sveltia-cms-auth.t-sulekh312.workers.dev
 
 media_folder: "public"
 public_folder: "/"
 
 collections:
-  # --- COLLECTION 1: PUBLIC POSTS ---
   - name: "posts"
     label: "Public Transmissions"
     folder: "src/content/posts"
     create: true
-    # NEW: Tells Decap to crawl subfolders (up to 5 levels deep)
-    nested:
-      depth: 5
     slug: "{{slug}}"
     extension: "mdx"
     format: "frontmatter"
@@ -34,14 +31,10 @@ collections:
       - {label: "Related Project", name: "relatedProject", widget: "string", required: false}
       - {label: "Payload / Markdown Body", name: "body", widget: "markdown"}
 
-  # --- COLLECTION 2: THE SECURE VAULT ---
   - name: "vault"
     label: "Encrypted Vault Logs"
     folder: "src/content/vault"
     create: true
-    # NEW: Also crawl subfolders in the vault if you have them
-    nested:
-      depth: 5
     slug: "{{slug}}"
     extension: "mdx"
     format: "frontmatter"
