@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: TejasweeSulekh/blog
+  repo: TejasweeSulekh/blog-source
   # IMPORTANT: Change this to "master" if your GitHub repo uses master!
   branch: main 
   use_graphql: false # Turned off to ensure reliable fetching
