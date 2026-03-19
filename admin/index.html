@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UPLINK // System Admin</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&family=IBM+Plex+Sans:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+      :root {
+        /* Hijack Decap CMS's base color variables */
+        --color-background: #0a0a0a; 
+        --color-surface: #111111; 
+        --color-primary: #45FCDB; /* Your Turquoise */
+        --color-active: #D35400;  /* Your Amber */
+        --color-text: #e0e0e0; 
+        --color-text-muted: #666666;
+      }
+
+      body {
+        font-family: 'IBM Plex Sans', sans-serif !important;
+        background-color: var(--color-background) !important;
+        color: var(--color-text) !important;
+        margin: 0;
+      }
+
+      /* Force Monospace on all headers and important UI elements */
+      h1, h2, h3, h4, h5, h6, .nc-appHeader-title, label {
+        font-family: 'IBM Plex Mono', monospace !important;
+        color: var(--color-primary) !important;
+        letter-spacing: 0.5px;
+      }
+
+      /* Darken the main application wrappers */
+      #nc-root > div, .nc-appHeader-container { 
+        background-color: var(--color-background) !important; 
+      }
+      
+      header[class*="AppHeader"] {
+        background-color: var(--color-surface) !important;
+        border-bottom: 1px solid var(--color-primary) !important;
+        box-shadow: 0 0 10px rgba(69, 252, 219, 0.1) !important;
+      }
+
+      /* Brutalist Buttons */
+      button {
+        border-radius: 0 !important;
+        font-family: 'IBM Plex Mono', monospace !important;
+        text-transform: uppercase !important;
+      }
+      button[class*="Button-button-default"] {
+        background-color: var(--color-surface) !important;
+        color: var(--color-primary) !important;
+        border: 1px solid var(--color-primary) !important;
+      }
+      button[class*="Button-button-primary"] {
+        background-color: var(--color-primary) !important;
+        color: #000 !important;
+        box-shadow: 0 0 10px rgba(69, 252, 219, 0.3) !important;
+      }
+
+      /* Terminal-style Input Fields */
+      input, select, textarea, [data-slate-editor] {
+        background-color: var(--color-surface) !important;
+        color: var(--color-primary) !important;
+        border: 1px solid var(--color-text-muted) !important;
+        font-family: 'IBM Plex Mono', monospace !important;
+        border-radius: 0 !important;
+      }
+      input:focus, textarea:focus, [data-slate-editor]:focus {
+        border-color: var(--color-primary) !important;
+        box-shadow: 0 0 5px rgba(69, 252, 219, 0.3) !important;
+        outline: none !important;
+      }
+      
+      /* Make the rich text editor area dark */
+      .nc-controlPane-control {
+        background-color: var(--color-background) !important;
+        border: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="https://unpkg.com/decap-cms@^3.1.2/dist/decap-cms.js"></script>
+  </body>
+</html>

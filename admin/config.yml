@@ -1,0 +1,39 @@
+backend:
+  name: github
+  repo: TejasweeSulekh/blog
+  branch: main # Or master, depending on your default branch
+  use_graphql: true
+  
+  # CHANGED: Removed trailing slash. 
+  # REMOVED: auth_endpoint and app_id (The Cloudflare worker handles these securely now!)
+  base_url: https://sveltia-cms-auth.t-sulekh312.workers.dev
+
+# Where the CMS should save uploaded images, and how the markdown should link them
+media_folder: "public"
+public_folder: "/"
+
+collections:
+  - name: "posts"
+    label: "Data Transmissions (Logs & Projects)"
+    folder: "src/content/posts"
+    create: true
+    slug: "{{slug}}"
+    extension: "mdx"
+    format: "frontmatter"
+    fields:
+      - {label: "Transmission Title", name: "title", widget: "string"}
+      - {label: "Category", name: "category", widget: "select", options: ["projects", "self-projects", "log", "transmissions"], default: "log"}
+      - {label: "System Description", name: "description", widget: "text"}
+      - {label: "Timestamp", name: "date", widget: "datetime"}
+      - {label: "Author ID", name: "author", widget: "string", default: "SYS_ADMIN"}
+      - {label: "Cover Image", name: "coverImage", widget: "image", required: false, default: "/default_image_for_blog.png"}
+      - {label: "Tech Stack / Tags", name: "tags", widget: "list", required: false}
+      
+      # Optional Metrics & Linkages
+      - {label: "Read Time (Minutes)", name: "readTime", widget: "number", value_type: "int", required: false}
+      - {label: "Preview Code (Terminal UI string)", name: "previewCode", widget: "text", required: false}
+      - {label: "Project ID (If this IS a project, e.g., 'fraud-pipeline')", name: "projectId", widget: "string", required: false}
+      - {label: "Related Project (If this is a LOG linking to a project)", name: "relatedProject", widget: "string", required: false}
+      
+      # The Markdown Content
+      - {label: "Payload / Markdown Body", name: "body", widget: "markdown"}
