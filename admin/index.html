@@ -5,11 +5,82 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>UPLINK // System Admin</title>
     <style>
-      /* Just a simple dark mode that won't break the layout */
-      body { background: #111; color: #fff; font-family: sans-serif; }
+      /* Global Admin Portal Theming */
+      body { 
+        background-color: #0B0C10; 
+        color: #E0F7FA; 
+        font-family: sans-serif; 
+        margin: 0;
+      }
+      
+      /* * Mobile Responsiveness Overrides
+       * Forces Decap CMS navigation bars and sidebars to wrap elements instead 
+       * of overflowing horizontally on mobile viewports.
+       */
+      [class*="AppHeader"], [class*="SidebarContainer"] {
+        flex-wrap: wrap !important;
+      }
+      [class*="CollectionContainer"], [class*="EditorContainer"] {
+        max-width: 100vw !important;
+        overflow-x: hidden !important;
+      }
     </style>
   </head>
   <body>
     <script src="https://unpkg.com/decap-cms@^3.1.2/dist/decap-cms.js"></script>
+    
+    <script>
+      /**
+       * Preview Pane Styling Initialization
+       * Injects raw CSS into the iframe utilized by Decap for markdown previews,
+       * simulating the terminal aesthetic of the front-end application.
+       */
+      CMS.registerPreviewStyle("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&family=IBM+Plex+Sans:wght@400;700&display=swap");
+      
+      CMS.registerPreviewStyle(`
+        body { 
+          background-color: #0B0C10; 
+          color: #E0F7FA; 
+          font-family: 'IBM Plex Sans', sans-serif; 
+          padding: 20px; 
+          line-height: 1.6;
+        }
+        h1, h2, h3, h4 { 
+          color: #45FCDB; 
+          font-family: 'IBM Plex Mono', monospace; 
+          margin-bottom: 1rem;
+        }
+        p { margin-bottom: 1.5rem; }
+        
+        /* Simulates the grayscale image transformation */
+        img { 
+          max-width: 100%; 
+          height: auto; 
+          filter: grayscale(100%); 
+          border: 2px solid #151515;
+          margin: 2rem 0;
+        }
+        
+        /* Terminal code block formatting */
+        pre { 
+          background-color: #151515; 
+          border: 1px solid #D35400; 
+          padding: 16px; 
+          border-radius: 4px;
+          overflow-x: auto;
+        }
+        code { 
+          font-family: 'IBM Plex Mono', monospace; 
+          color: #D35400;
+        }
+        
+        /* Standard anchor link simulation */
+        a {
+          color: #45FCDB;
+          text-decoration: none;
+          border-bottom: 1px solid #45FCDB;
+        }
+      `, { raw: true });
+    </script>
   </body>
 </html>
