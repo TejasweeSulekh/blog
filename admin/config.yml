@@ -1,7 +1,6 @@
 backend:
   name: github
   repo: TejasweeSulekh/blog-source
-  # IMPORTANT: Change this to "master" if your GitHub repo uses master!
   branch: main 
   use_graphql: false # Turned off to ensure reliable fetching
   base_url: https://sveltia-cms-auth.t-sulekh312.workers.dev
@@ -10,48 +9,136 @@ media_folder: "public"
 public_folder: "/"
 
 collections:
-  - name: "posts"
-    label: "Public Transmissions"
-    folder: "src/content/posts"
+  # ==========================================
+  # 🌐 PUBLIC TRANSMISSIONS (Unencrypted)
+  # ==========================================
+
+  - name: "public_projects"
+    label: "🌐 Public Projects"
+    folder: "src/content/posts/projects"
     create: true
-    nested:
-      depth: 3
     slug: "{{slug}}"
     extension: "mdx"
     format: "frontmatter"
     fields:
       - {label: "Transmission Title", name: "title", widget: "string"}
-      - {label: "Category", name: "category", widget: "select", options: ["projects", "self-projects", "log", "transmissions"], default: "log"}
+      - {label: "Category", name: "category", widget: "hidden", default: "projects"}
       - {label: "System Description", name: "description", widget: "text"}
       - {label: "Timestamp", name: "date", widget: "datetime"}
       - {label: "Author ID", name: "author", widget: "string", default: "SYS_ADMIN"}
       - {label: "Cover Image", name: "coverImage", widget: "image", required: false, default: "/default_image_for_blog.png"}
       - {label: "Tech Stack / Tags", name: "tags", widget: "list", required: false}
       - {label: "Read Time (Minutes)", name: "readTime", widget: "number", value_type: "int", required: false}
-      - {label: "Preview Code (Terminal UI string)", name: "previewCode", widget: "text", required: false}
-      - {label: "Project ID", name: "projectId", widget: "string", required: false}
+      - {label: "Preview Code (Terminal UI)", name: "previewCode", widget: "text", required: false}
+      - {label: "Project ID", name: "projectId", widget: "string", required: false, hint: "Give this project a unique ID (e.g., 'fraud-system')."}
       - {label: "Related Project", name: "relatedProject", widget: "string", required: false}
       - {label: "Payload / Markdown Body", name: "body", widget: "markdown"}
 
-  - name: "vault"
-    label: "Encrypted Vault Logs"
-    folder: "src/content/vault"
+  - name: "public_blogs"
+    label: "🌐 Public Blogs"
+    folder: "src/content/posts/blog"
     create: true
-    nested:
-      depth: 3
     slug: "{{slug}}"
     extension: "mdx"
     format: "frontmatter"
     fields:
       - {label: "Transmission Title", name: "title", widget: "string"}
-      - {label: "Category", name: "category", widget: "select", options: ["projects", "self-projects", "log", "transmissions"], default: "log", hint: "Projects appear in the Dashboard highlight. Logs appear in the lists below."}
-      - {label: "System Description", name: "description", widget: "text", hint: "A punchy 1-2 sentence summary for SEO and preview cards."}
+      - {label: "Category", name: "category", widget: "hidden", default: "blog"}
+      - {label: "System Description", name: "description", widget: "text"}
       - {label: "Timestamp", name: "date", widget: "datetime"}
       - {label: "Author ID", name: "author", widget: "string", default: "SYS_ADMIN"}
-      - {label: "Cover Image", name: "coverImage", widget: "image", required: false, hint: "Upload an image. It will auto-apply the grayscale-to-color terminal effect."}
-      - {label: "Tech Stack / Tags", name: "tags", widget: "list", required: false, hint: "Used for the grep filtering system."}
+      - {label: "Cover Image", name: "coverImage", widget: "image", required: false, default: "/default_image_for_blog.png"}
+      - {label: "Tech Stack / Tags", name: "tags", widget: "list", required: false}
       - {label: "Read Time (Minutes)", name: "readTime", widget: "number", value_type: "int", required: false}
-      - {label: "Preview Code (Terminal UI string)", name: "previewCode", widget: "text", required: false, hint: "The snippet that shows up in the Bento Dashboard code box."}
-      - {label: "Project ID", name: "projectId", widget: "string", required: false, hint: "If this is a PROJECT, give it a unique ID (e.g., 'fraud-system')."}
-      - {label: "Related Project", name: "relatedProject", widget: "string", required: false, hint: "If this is a LOG, type the Project ID it belongs to so they link together."}
+      - {label: "Preview Code (Terminal UI)", name: "previewCode", widget: "text", required: false}
+      - {label: "Project ID", name: "projectId", widget: "string", required: false}
+      - {label: "Related Project", name: "relatedProject", widget: "string", required: false, hint: "Link to a Project ID if relevant."}
+      - {label: "Payload / Markdown Body", name: "body", widget: "markdown"}
+
+  - name: "public_logs"
+    label: "🌐 Public Logs"
+    folder: "src/content/posts" # Saves directly to the root of the posts folder
+    create: true
+    slug: "{{slug}}"
+    extension: "mdx"
+    format: "frontmatter"
+    fields:
+      - {label: "Transmission Title", name: "title", widget: "string"}
+      - {label: "Category", name: "category", widget: "hidden", default: "log"}
+      - {label: "System Description", name: "description", widget: "text"}
+      - {label: "Timestamp", name: "date", widget: "datetime"}
+      - {label: "Author ID", name: "author", widget: "string", default: "SYS_ADMIN"}
+      - {label: "Cover Image", name: "coverImage", widget: "image", required: false, default: "/default_image_for_blog.png"}
+      - {label: "Tech Stack / Tags", name: "tags", widget: "list", required: false}
+      - {label: "Read Time (Minutes)", name: "readTime", widget: "number", value_type: "int", required: false}
+      - {label: "Preview Code (Terminal UI)", name: "previewCode", widget: "text", required: false}
+      - {label: "Project ID", name: "projectId", widget: "string", required: false}
+      - {label: "Related Project", name: "relatedProject", widget: "string", required: false, hint: "Link to a Project ID if relevant."}
+      - {label: "Payload / Markdown Body", name: "body", widget: "markdown"}
+
+  # ==========================================
+  # 🔒 ENCRYPTED VAULT LOGS
+  # ==========================================
+
+  - name: "vault_projects"
+    label: "🔒 Vault Projects"
+    folder: "src/content/vault/projects"
+    create: true
+    slug: "{{slug}}"
+    extension: "mdx"
+    format: "frontmatter"
+    fields:
+      - {label: "Transmission Title", name: "title", widget: "string"}
+      - {label: "Category", name: "category", widget: "hidden", default: "projects"}
+      - {label: "System Description", name: "description", widget: "text"}
+      - {label: "Timestamp", name: "date", widget: "datetime"}
+      - {label: "Author ID", name: "author", widget: "string", default: "SYS_ADMIN"}
+      - {label: "Cover Image", name: "coverImage", widget: "image", required: false}
+      - {label: "Tech Stack / Tags", name: "tags", widget: "list", required: false}
+      - {label: "Read Time (Minutes)", name: "readTime", widget: "number", value_type: "int", required: false}
+      - {label: "Preview Code (Terminal UI)", name: "previewCode", widget: "text", required: false}
+      - {label: "Project ID", name: "projectId", widget: "string", required: false, hint: "Give this project a unique ID (e.g., 'fraud-system')."}
+      - {label: "Related Project", name: "relatedProject", widget: "string", required: false}
+      - {label: "Payload / Markdown Body", name: "body", widget: "markdown"}
+
+  - name: "vault_blogs"
+    label: "🔒 Vault Blogs"
+    folder: "src/content/vault/blog"
+    create: true
+    slug: "{{slug}}"
+    extension: "mdx"
+    format: "frontmatter"
+    fields:
+      - {label: "Transmission Title", name: "title", widget: "string"}
+      - {label: "Category", name: "category", widget: "hidden", default: "blog"}
+      - {label: "System Description", name: "description", widget: "text"}
+      - {label: "Timestamp", name: "date", widget: "datetime"}
+      - {label: "Author ID", name: "author", widget: "string", default: "SYS_ADMIN"}
+      - {label: "Cover Image", name: "coverImage", widget: "image", required: false}
+      - {label: "Tech Stack / Tags", name: "tags", widget: "list", required: false}
+      - {label: "Read Time (Minutes)", name: "readTime", widget: "number", value_type: "int", required: false}
+      - {label: "Preview Code (Terminal UI)", name: "previewCode", widget: "text", required: false}
+      - {label: "Project ID", name: "projectId", widget: "string", required: false}
+      - {label: "Related Project", name: "relatedProject", widget: "string", required: false, hint: "Link to a Project ID if relevant."}
+      - {label: "Payload / Markdown Body", name: "body", widget: "markdown"}
+
+  - name: "vault_logs"
+    label: "🔒 Vault Logs"
+    folder: "src/content/vault" # Saves directly to the root of the vault folder
+    create: true
+    slug: "{{slug}}"
+    extension: "mdx"
+    format: "frontmatter"
+    fields:
+      - {label: "Transmission Title", name: "title", widget: "string"}
+      - {label: "Category", name: "category", widget: "hidden", default: "log"}
+      - {label: "System Description", name: "description", widget: "text"}
+      - {label: "Timestamp", name: "date", widget: "datetime"}
+      - {label: "Author ID", name: "author", widget: "string", default: "SYS_ADMIN"}
+      - {label: "Cover Image", name: "coverImage", widget: "image", required: false}
+      - {label: "Tech Stack / Tags", name: "tags", widget: "list", required: false}
+      - {label: "Read Time (Minutes)", name: "readTime", widget: "number", value_type: "int", required: false}
+      - {label: "Preview Code (Terminal UI)", name: "previewCode", widget: "text", required: false}
+      - {label: "Project ID", name: "projectId", widget: "string", required: false}
+      - {label: "Related Project", name: "relatedProject", widget: "string", required: false, hint: "Link to a Project ID if relevant."}
       - {label: "Payload / Markdown Body", name: "body", widget: "markdown"}
