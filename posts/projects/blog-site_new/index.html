@@ -19,39 +19,8 @@
 <ul>
 <li><strong>GhostTerminal &amp; The Amnesia Protocol:</strong> To actually read my vault, I don’t go to a separate login page. I built hidden triggers directly into the UI. Regardless of the device (mobile or laptop), I can tap a specific invisible sector on the screen three times (or hit <code>Shift + Alt + V</code>), and a “Ghost Terminal” mounts over the UI</li>
 </ul>
-<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// GhostTerminal.jsx - The Secret Trigger</span></span>
-<span class="line"><span style="color:#F97583">const</span><span style="color:#B392F0"> handleSecretTrigger</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">e</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=&gt;</span><span style="color:#E1E4E8"> {</span></span>
-<span class="line"><span style="color:#E1E4E8">  e.</span><span style="color:#B392F0">preventDefault</span><span style="color:#E1E4E8">();</span></span>
-<span class="line"><span style="color:#F97583">  if</span><span style="color:#E1E4E8"> (terminalState </span><span style="color:#F97583">===</span><span style="color:#9ECBFF"> &#39;unlocked&#39;</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">return</span><span style="color:#E1E4E8">; </span><span style="color:#6A737D">// Do nothing if already in</span></span>
-<span class="line"><span style="color:#E1E4E8">  </span></span>
-<span class="line"><span style="color:#F97583">  const</span><span style="color:#79B8FF"> newCount</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> clickCount </span><span style="color:#F97583">+</span><span style="color:#79B8FF"> 1</span><span style="color:#E1E4E8">;</span></span>
-<span class="line"><span style="color:#B392F0">  setClickCount</span><span style="color:#E1E4E8">(newCount);</span></span>
-<span class="line"><span style="color:#E1E4E8">  </span></span>
-<span class="line"><span style="color:#6A737D">  // Reset the counter if a second passes between clicks</span></span>
-<span class="line"><span style="color:#F97583">  if</span><span style="color:#E1E4E8"> (clickTimeout.current) </span><span style="color:#B392F0">clearTimeout</span><span style="color:#E1E4E8">(clickTimeout.current);</span></span>
-<span class="line"><span style="color:#E1E4E8">  clickTimeout.current </span><span style="color:#F97583">=</span><span style="color:#B392F0"> setTimeout</span><span style="color:#E1E4E8">(() </span><span style="color:#F97583">=&gt;</span><span style="color:#B392F0"> setClickCount</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">), </span><span style="color:#79B8FF">1000</span><span style="color:#E1E4E8">);</span></span>
-<span class="line"><span style="color:#E1E4E8">  </span></span>
-<span class="line"><span style="color:#6A737D">  // If 3 rapid clicks are detected, prompt for the master key</span></span>
-<span class="line"><span style="color:#F97583">  if</span><span style="color:#E1E4E8"> (newCount </span><span style="color:#F97583">&gt;=</span><span style="color:#79B8FF"> 3</span><span style="color:#E1E4E8">) {</span></span>
-<span class="line"><span style="color:#B392F0">    setClickCount</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">);</span></span>
-<span class="line"><span style="color:#B392F0">    setTerminalState</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&#39;prompting&#39;</span><span style="color:#E1E4E8">);</span></span>
-<span class="line"><span style="color:#E1E4E8">  }</span></span>
-<span class="line"><span style="color:#E1E4E8">};</span></span>
-<span class="line"></span></code></pre>
 <p>Once the terminal prompts me, I enter my master password. The browser uses the native <strong>WebCrypto API</strong> to hash my input against the salt stored in the <strong>JSON file</strong>. If it matches, the vault unlocks.</p>
 <p>The coolest part is what I call the <strong>Amnesia Protocol</strong>. The decrypted markdown files are never saved to the hard drive or <code>localStorage</code>. They exist purely in the browser’s volatile <code>sessionStorage</code>.</p>
-<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// A snippet of the decryption routine</span></span>
-<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> decryptedBuffer</span><span style="color:#F97583"> =</span><span style="color:#F97583"> await</span><span style="color:#E1E4E8"> window.crypto.subtle.</span><span style="color:#B392F0">decrypt</span><span style="color:#E1E4E8">(</span></span>
-<span class="line"><span style="color:#E1E4E8">  { name: </span><span style="color:#9ECBFF">&quot;AES-GCM&quot;</span><span style="color:#E1E4E8">, iv }, </span></span>
-<span class="line"><span style="color:#E1E4E8">  key, </span></span>
-<span class="line"><span style="color:#E1E4E8">  ciphertext</span></span>
-<span class="line"><span style="color:#E1E4E8">);</span></span>
-<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> decoded</span><span style="color:#F97583"> =</span><span style="color:#F97583"> new</span><span style="color:#B392F0"> TextDecoder</span><span style="color:#E1E4E8">().</span><span style="color:#B392F0">decode</span><span style="color:#E1E4E8">(decryptedBuffer);</span></span>
-<span class="line"></span>
-<span class="line"></span>
-<span class="line"><span style="color:#6A737D">// Save strictly to volatile RAM. </span></span>
-<span class="line"><span style="color:#E1E4E8">sessionStorage.</span><span style="color:#B392F0">setItem</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&#39;volatileRamLogs&#39;</span><span style="color:#E1E4E8">, decoded);</span></span>
-<span class="line"></span></code></pre>
 <p>The moment I close the browser tab, the memory is wiped clean. The data ceases to exist in a readable format until I trigger the terminal and enter the password again.</p>
 <p>//TODO: [Deep Dive Log: Check out the UI implementation and how React handles state management without leaking decrypted data.]</p>
 <h2 id="engineering-trade-offs">Engineering Trade-offs</h2>
