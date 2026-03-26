@@ -12,19 +12,14 @@
 <h2 id="how-it-works-the-architecture">How It Works (The Architecture)</h2>
 <p>To give an overview of the implementation, the site avoids traditional backend servers (like Node.js or PostgreSQL) entirely. Instead, it relies on a hybrid architecture that splits the workload between the build step and the browser. Here are the layers making it happen:</p>
 <ul>
-<li>
-<p><strong>The Public Layer:</strong> I can just write standard Markdown files via <strong>Decap CMS</strong> or during the build process, Astro takes these files and compiles them into ultra-fast, static HTML pages. No database queries!! No loading spinners just raw static speed :D</p>
-</li>
-<li>
-<p><strong>The Private Layer:</strong> This is where things get interesting. Before Astro even touches the code, a Python script (<code>encrypt_vault.py</code>) runs in my GitHub Actions pipeline. It scans a specific <code>/vault</code> directory containing my private Markdown files. Instead of turning these into HTML, it takes the raw text, generates a random cryptographic salt, and encrypts everything using <strong>AES-256-GCM</strong> and a <strong>PBKDF2</strong> key derivation function. It then bundles all these encrypted files into a single <code>encrypted.json</code> file</p>
-</li>
+<li><strong>The Public Layer:</strong> I can just write standard Markdown files via <strong>Decap CMS</strong> or during the build process, Astro takes these files and compiles them into ultra-fast, static HTML pages. No database queries!! No loading spinners just raw static speed :D</li>
+<li><strong>The Private Layer:</strong> This is where things get interesting. Before Astro even touches the code, a Python script (<code>encrypt_vault.py</code>) runs in my GitHub Actions pipeline. It scans a specific <code>/vault</code> directory containing my private Markdown files. Instead of turning these into HTML, it takes the raw text, generates a random cryptographic salt, and encrypts everything using <strong>AES-256-GCM</strong> and a <strong>PBKDF2</strong> key derivation function. It then bundles all these encrypted files into a single <code>encrypted.json</code> file</li>
 </ul>
-<p>// TODO: [Deep Dive Log: Read exactly how the cryptographic trapdoor works and why it mathematically prevents reverse-engineering.]</p>
+<p><a href="https://tejasweesulekh.github.io/blog/posts/engineering-a-static-vault-build-time-encryption-1/">Deep Dive Log: Read exactly how the cryptographic trapdoor works and why it mathematically prevents reverse-engineering.</a></p>
 <ul>
 <li><strong>GhostTerminal &amp; The Amnesia Protocol:</strong> To actually read my vault, I don’t go to a separate login page. I built hidden triggers directly into the UI. Regardless of the device (mobile or laptop), I can tap a specific invisible sector on the screen three times (or hit <code>Shift + Alt + V</code>), and a “Ghost Terminal” mounts over the UI</li>
 </ul>
-<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="javascript"><code><span class="line"></span>
-<span class="line"><span style="color:#6A737D">// GhostTerminal.jsx - The Secret Trigger</span></span>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// GhostTerminal.jsx - The Secret Trigger</span></span>
 <span class="line"><span style="color:#F97583">const</span><span style="color:#B392F0"> handleSecretTrigger</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">e</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=&gt;</span><span style="color:#E1E4E8"> {</span></span>
 <span class="line"><span style="color:#E1E4E8">  e.</span><span style="color:#B392F0">preventDefault</span><span style="color:#E1E4E8">();</span></span>
 <span class="line"><span style="color:#F97583">  if</span><span style="color:#E1E4E8"> (terminalState </span><span style="color:#F97583">===</span><span style="color:#9ECBFF"> &#39;unlocked&#39;</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">return</span><span style="color:#E1E4E8">; </span><span style="color:#6A737D">// Do nothing if already in</span></span>
@@ -45,8 +40,7 @@
 <span class="line"></span></code></pre>
 <p>Once the terminal prompts me, I enter my master password. The browser uses the native <strong>WebCrypto API</strong> to hash my input against the salt stored in the <strong>JSON file</strong>. If it matches, the vault unlocks.</p>
 <p>The coolest part is what I call the <strong>Amnesia Protocol</strong>. The decrypted markdown files are never saved to the hard drive or <code>localStorage</code>. They exist purely in the browser’s volatile <code>sessionStorage</code>.</p>
-<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="javascript"><code><span class="line"></span>
-<span class="line"><span style="color:#6A737D">// A snippet of the decryption routine</span></span>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// A snippet of the decryption routine</span></span>
 <span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> decryptedBuffer</span><span style="color:#F97583"> =</span><span style="color:#F97583"> await</span><span style="color:#E1E4E8"> window.crypto.subtle.</span><span style="color:#B392F0">decrypt</span><span style="color:#E1E4E8">(</span></span>
 <span class="line"><span style="color:#E1E4E8">  { name: </span><span style="color:#9ECBFF">&quot;AES-GCM&quot;</span><span style="color:#E1E4E8">, iv }, </span></span>
 <span class="line"><span style="color:#E1E4E8">  key, </span></span>
@@ -58,16 +52,12 @@
 <span class="line"><span style="color:#E1E4E8">sessionStorage.</span><span style="color:#B392F0">setItem</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&#39;volatileRamLogs&#39;</span><span style="color:#E1E4E8">, decoded);</span></span>
 <span class="line"></span></code></pre>
 <p>The moment I close the browser tab, the memory is wiped clean. The data ceases to exist in a readable format until I trigger the terminal and enter the password again.</p>
-<p>//TODO: [Deep Dive Log: Check out the UI implementation and how React handles state management without leaking decrypted data.]</p>
+<p><a href="https://tejasweesulekh.github.io/blog/posts/engineering-a-static-vault-build-time-encryption/">Deep Dive Log: Check out the UI implementation and how React handles state management without leaking decrypted data</a></p>
 <h2 id="engineering-trade-offs">Engineering Trade-offs</h2>
 <p>No system is perfect, and building a serverless vault requires accepting a few specific architectural trade-offs:</p>
 <ol>
-<li>
-<p><strong>The Payload Size (JSON Bloat):</strong> Because the database is just a flat JSON file, the Python script bundles every single vault log into one payload. Right now, downloading a few megabytes of encrypted text takes milliseconds. But if this vault scales to <code>10,000</code> entries, then the browser would have to download a massive of file just to read a single note. For a personal site, this limit is acceptable, but it wouldn’t have worked for a large-scale SaaS app</p>
-</li>
-<li>
-<p><strong>Client-Side Vulnerabilities:</strong> The cryptography sitting on the GitHub repository is practically bulletproof. However, because the decryption happens inside the browser’s DOM, the text is theoretically vulnerable to malicious browser extensions installed on my local machine or any other machine I try to access these files through. It relies on the local environment being secure D;</p>
-</li>
+<li><strong>The Payload Size (JSON Bloat):</strong> Because the database is just a flat JSON file, the Python script bundles every single vault log into one payload. Right now, downloading a few megabytes of encrypted text takes milliseconds. But if this vault scales to <code>10,000</code> entries, then the browser would have to download a massive of file just to read a single note. For a personal site, this limit is acceptable, but it wouldn’t have worked for a large-scale SaaS app</li>
+<li><strong>Client-Side Vulnerabilities:</strong> The cryptography sitting on the GitHub repository is practically bulletproof. However, because the decryption happens inside the browser’s DOM, the text is theoretically vulnerable to malicious browser extensions installed on my local machine or any other machine I try to access these files through. It relies on the local environment being secure D;</li>
 </ol>
 <h2 id="conclusion">Conclusion</h2>
 <p>What started as a simple portfolio site evolved into a fully autonomous, serverless mind-palace. By combining Astro’s static generation speeds with React’s dynamic client-side rendering <em>and</em> wrapping it all in a Python-powered cryptographic build step. I ended up with a system that gives me the best of both worlds. All of this while looking cool :D</p>
