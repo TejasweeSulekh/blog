@@ -1,5 +1,5 @@
-<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><link rel="icon" type="image/png" href="/blogfavicon_blog.png"><link rel="shortcut icon" href="/blogfavicon_blog.png"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>404 // DIRECTORY NOT FOUND</title><meta name="description" content="Software Engineer bridging ML, Python, and Embedded Systems."><meta property="og:type" content="website"><meta property="og:title" content="404 // DIRECTORY NOT FOUND"><meta property="og:description" content="Software Engineer bridging ML, Python, and Embedded Systems."><meta property="og:image" content="/default-og.png"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="404 // DIRECTORY NOT FOUND"><meta name="twitter:description" content="Software Engineer bridging ML, Python, and Embedded Systems."><meta name="twitter:image" content="/default-og.png"><link rel="stylesheet" href="/blog/_astro/index.DTlgOejg.css">
-<link rel="stylesheet" href="/blog/_astro/_slug_.0awB3xvO.css"></head> <body class="bg-transparent text-body-text relative min-h-screen antialiased selection:bg-primary-accent selection:text-base-bg pt-14 overflow-x-hidden">  <div id="boot-curtain" class="fixed inset-0 bg-base-bg z-[99999]"></div>  <script>
+<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><link rel="icon" type="image/png" href="/blogfavicon_blog.png"><link rel="shortcut icon" href="/blogfavicon_blog.png"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>404 // DIRECTORY NOT FOUND</title><meta name="description" content="Software Engineer bridging ML, Python, and Embedded Systems."><meta property="og:type" content="website"><meta property="og:title" content="404 // DIRECTORY NOT FOUND"><meta property="og:description" content="Software Engineer bridging ML, Python, and Embedded Systems."><meta property="og:image" content="/default-og.png"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="404 // DIRECTORY NOT FOUND"><meta name="twitter:description" content="Software Engineer bridging ML, Python, and Embedded Systems."><meta name="twitter:image" content="/default-og.png"><link rel="stylesheet" href="/blog/_astro/index.BQdFil-w.css">
+<link rel="stylesheet" href="/blog/_astro/_slug_.gHSq9CBY.css"></head> <body class="bg-transparent text-body-text relative min-h-screen antialiased selection:bg-primary-accent selection:text-base-bg pt-14 overflow-x-hidden">  <div id="boot-curtain" class="fixed inset-0 bg-base-bg z-[99999]"></div>  <script>
       if (sessionStorage.getItem('systemBooted') === 'true') {
         const curtain = document.getElementById('boot-curtain');
         if (curtain) curtain.style.display = 'none';
@@ -14,20 +14,19 @@ The requested sector has been corrupted, classified, or wiped from the public da
       import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
       
       mermaid.initialize({ 
-        startOnLoad: false, // <--- CHANGED: We will manually trigger this now
+        startOnLoad: false, 
         theme: 'base',
         themeVariables: {
-          background: '#0B0C10',
-          primaryColor: '#151515',
+          background: '#151515',     // <--- FIX: Forces exact match to bg-surface-bg
+          primaryColor: '#0a1c18',
           primaryTextColor: '#E0F7FA',
           primaryBorderColor: '#45FCDB',
-          lineColor: '#D35400',
+          lineColor: '#45FCDB',
           secondaryColor: '#D35400',
-          tertiaryColor: '#151515'
+          tertiaryColor: '#0B0C10'
         }
       });
       
       window.mermaid = mermaid;
-      // Fire a custom event to tell React and Astro that Mermaid is downloaded and ready
       window.dispatchEvent(new Event('mermaid-ready'));
     </script> </body> </html>
