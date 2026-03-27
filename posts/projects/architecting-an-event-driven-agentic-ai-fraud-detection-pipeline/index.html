@@ -12,10 +12,12 @@
 <p>When designing a high-throughput system, tight coupling is the enemy. If a million transactions spike during a holiday sale, a standard REST API connected directly to a database will buckle. To prevent this, the architecture is broken down into specialized, decoupled layers:</p>
 <ol>
 <li>
-<p><strong>Ingestion &amp; Buffering (Apache Kafka)</strong>: Instead of hitting the API directly, transactions are published to a Kafka topic. Kafka acts as a shock absorber, queuing the events so the compute layer can consume them at a safe, controlled rate // TODO: [Deep Dive 1 - Real-Time Streaming &amp; Caching (Kafka + Redis + FastAPI)]</p>
+<p><strong>Ingestion &amp; Buffering (Apache Kafka)</strong>: Instead of hitting the API directly, transactions are published to a Kafka topic. Kafka acts as a shock absorber, queuing the events so the compute layer can consume them at a safe, controlled rate</p>
+<p><a href="https://tejasweesulekh.github.io/blog/posts/real-time-streaming-caching/">Deep Dive 1 - Real-Time Streaming &amp; Caching (Kafka + Redis + FastAPI)</a></p>
 </li>
 <li>
-<p><strong>Real-Time Inference (FastAPI &amp; Redis)</strong>: A Python consumer pulls from Kafka and hits the inference endpoint. To achieve sub-100ms latency, the API first checks a <strong>Redis read-through cache</strong>. If the transaction was recently evaluated, it returns immediately. If not, it loads the active XGBoost model from the <strong>MLflow Registry</strong> and calculates the risk. // TODO: [Deep Dive 2 - The ML Pipeline &amp; Explainable AI (XGBoost + MLflow + SHAP)]</p>
+<p><strong>Real-Time Inference (FastAPI &amp; Redis)</strong>: A Python consumer pulls from Kafka and hits the inference endpoint. To achieve sub-100ms latency, the API first checks a <strong>Redis read-through cache</strong>. If the transaction was recently evaluated, it returns immediately. If not, it loads the active XGBoost model from the <strong>MLflow Registry</strong> and calculates the risk.</p>
+<p><a href="https://tejasweesulekh.github.io/blog/posts/the-ml-pipeline-explainable-ai/">Deep Dive 2 - The ML Pipeline &amp; Explainable AI (XGBoost + MLflow + SHAP)</a></p>
 </li>
 <li>
 <p><strong>Unified Storage (PostgreSQL + pgvector)</strong>: Background tasks handle the heavy lifting of generating LLM vector embeddings for the transaction. Both the relational data (timestamps, amounts, ML predictions) and the high-dimensional vector embeddings are stored in a single PostgreSQL database using the <code>pgvector</code> extension. This heavily simplifies the infrastructure compared to running a separate, dedicated vector database.</p>
@@ -64,11 +66,11 @@
 </li>
 </ul>
 <p>The agent synthesizes this raw mathematical and historical data into a concise, professional executive summary, effectively doing the initial legwork of a junior fraud analyst in seconds.</p>
-<p>// TODO: [Deep Dive 3 - The Agentic Brain (LangGraph + pgvector)]</p>
+<p><a href="https://tejasweesulekh.github.io/blog/posts/the-agentic-brain/">Deep Dive 3 - The Agentic Brain (LangGraph + pgvector)</a></p>
 <h2 id="cloud-native-deployment">Cloud-Native Deployment</h2>
 <p>To bridge the gap between local development and production reality, the entire architecture is built for Kubernetes. Using tools like Minikube or Kind, the system can be spun up locally</p>
 <p>The deployment strategy utilizes Kubernetes <code>Jobs</code> for stateful initializations—such as <code>init-model</code>, a containerized training job that automatically trains the baseline model and registers it via MLflow before the core inference pods are allowed to spin up. This ensures the API never boots without a model ready to serve.</p>
-<p>// TODO: [Deep Dive 4 - Cloud-Native Orchestration (Kubernetes)]</p>
+<p><a href="https://tejasweesulekh.github.io/blog/posts/cloud-native-orchestration-deployment/">Deep Dive 4 - Cloud-Native Orchestration (Kubernetes)</a></p>
 <h2 id="what-was-accomplished">What Was Accomplished</h2>
 <p>Ultimately, this project bridges the gap between traditional MLOps, real-time streaming, and modern Generative AI. By decoupling the architecture, the system achieves the high-throughput, low-latency performance required of financial systems. At the same time, integrating LangGraph and pgvector solves the “black box” problem, providing analysts with instant, data-backed context without sacrificing operational speed.</p>
 <h2 id="looking-ahead-future-improvements">Looking Ahead: Future Improvements</h2>
