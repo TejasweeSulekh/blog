@@ -133,7 +133,8 @@ You can think of LIF digital neurons as tiny, leaky capacitors. Here is how they
 
       // Start watching the body for changes
       observer.observe(document.body, { childList: true, subtree: true });
-    </script>  <script>
+    </script>  <script>(function(){const ipToken = undefined;
+
       async function enrichAndTrack() {
         // 1. Load Umami engine for the BLOG
         const script = document.createElement('script');
@@ -146,9 +147,15 @@ You can think of LIF digital neurons as tiny, leaky capacitors. Here is how they
         // 2. Wait for the script to load before firing the custom payload
         script.onload = async () => {
           try {
-            const response = await fetch(`https://ipinfo.io/json?token=${ipToken}`);
-            const data = await response.json();
-            const organization = data.org || 'Unknown Network';
+            // CHECK MEMORY FIRST: Only fetch if the org is not in sessionStorage
+            let organization = sessionStorage.getItem('b2b_org');
+
+            if(!organization) {
+              const response = await fetch(`https://ipinfo.io/json?token=${ipToken}`);
+              const data = await response.json();
+              organization = data.org || 'Unknown Network';
+              essionStorage.setItem('b2b_org', organization);
+            }
 
             if (window.umami) {
               window.umami.track(props => ({
@@ -164,4 +171,4 @@ You can think of LIF digital neurons as tiny, leaky capacitors. Here is how they
       }
 
       enrichAndTrack();
-    </script> </body> </html>
+    })();</script> </body> </html>
