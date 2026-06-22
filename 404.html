@@ -1,79 +1,37 @@
-<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><link rel="icon" type="image/png" href="/blogfavicon_blog.png"><link rel="shortcut icon" href="/blogfavicon_blog.png"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>404 // DIRECTORY NOT FOUND</title><meta name="description" content="Software Engineer bridging ML, Python, and Embedded Systems."><meta property="og:type" content="website"><meta property="og:title" content="404 // DIRECTORY NOT FOUND"><meta property="og:description" content="Software Engineer bridging ML, Python, and Embedded Systems."><meta property="og:image" content="/default-og.png"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="404 // DIRECTORY NOT FOUND"><meta name="twitter:description" content="Software Engineer bridging ML, Python, and Embedded Systems."><meta name="twitter:image" content="/default-og.png"><link rel="stylesheet" href="/blog/_astro/index.BkriTj1S.css">
-<link rel="stylesheet" href="/blog/_astro/_slug_.WGEekkLi.css"></head> <body class="bg-transparent text-body-text relative min-h-screen antialiased selection:bg-primary-accent selection:text-base-bg pt-14 overflow-x-hidden">  <div id="native-boot-screen" class="fixed inset-0 z-[99999] flex flex-col items-center justify-center p-4 bg-base-bg font-mono text-secondary-accent pointer-events-none"> <div class="w-full max-w-[320px] flex flex-col gap-1.5 text-xs md:text-sm font-bold tracking-widest whitespace-nowrap">  <div class="boot-line" style="animation-delay: 0s">>_ INITIALIZING DATABANKS...</div> <div class="boot-line" style="animation-delay: 0.15s">>_ LOADING UI MODULES...</div> <div class="boot-line" style="animation-delay: 0.30s">>_ DECRYPTING ASSETS...</div> <div class="boot-line" style="animation-delay: 0.90s">>_ SECURING CONNECTION...</div> <div class="boot-line text-primary-accent text-glow-turquoise mt-2" style="animation-delay: 1.00s">>_ SYSTEM READY.</div>  <div class="mt-4 text-body-text-muted opacity-70 no-glow boot-progress"></div> </div> </div>  <script>
+<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><link rel="icon" type="image/png" href="/blogfavicon_blog.png?v=2"><link rel="shortcut icon" href="/blogfavicon_blog.png?v=2"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>404 // DIRECTORY NOT FOUND</title><meta name="description" content="Software Engineer bridging ML, Python, and Embedded Systems."><meta property="og:type" content="website"><meta property="og:title" content="404 // DIRECTORY NOT FOUND"><meta property="og:description" content="Software Engineer bridging ML, Python, and Embedded Systems."><meta property="og:image" content="/blog/default-og.png"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="404 // DIRECTORY NOT FOUND"><meta name="twitter:description" content="Software Engineer bridging ML, Python, and Embedded Systems."><meta name="twitter:image" content="/blog/default-og.png"><link rel="stylesheet" href="/blog/_astro/index.CfFkAgq0.css">
+<link rel="stylesheet" href="/blog/_astro/_slug_.CDelU8Es.css"></head> <body class="bg-transparent text-body-text relative min-h-screen antialiased selection:bg-primary-accent selection:text-base-bg pt-14 overflow-x-hidden">  <div id="native-boot-screen" class="fixed inset-0 z-[99999] flex flex-col items-center justify-center p-4 bg-base-bg font-mono text-secondary-accent pointer-events-none"> <div class="w-full max-w-[320px] flex flex-col gap-1.5 text-xs md:text-sm font-bold tracking-widest whitespace-nowrap">  <div class="boot-line" style="animation-delay: 0s">>_ INITIALIZING DATABANKS...</div> <div class="boot-line" style="animation-delay: 0.15s">>_ LOADING UI MODULES...</div> <div class="boot-line" style="animation-delay: 0.30s">>_ DECRYPTING ASSETS...</div> <div class="boot-line" style="animation-delay: 0.90s">>_ SECURING CONNECTION...</div> <div class="boot-line text-primary-accent text-glow-turquoise mt-2" style="animation-delay: 1.00s">>_ SYSTEM READY.</div>  <div class="mt-4 text-body-text-muted opacity-70 no-glow boot-progress"></div> </div> </div>  <script>
       const bootScreen = document.getElementById('native-boot-screen');
       
       if (sessionStorage.getItem('systemBooted') === 'true') {
         if (bootScreen) bootScreen.style.display = 'none';
       } else {
         if (bootScreen) {
-          // Fade out starts at 1.4s (allows 400ms for the "100%" to hold on screen)
-          bootScreen.style.animation = 'bootFadeOut 0.3s ease-out 1.4s forwards';
-          sessionStorage.setItem('systemBooted', 'true');
+          window.addEventListener('load', () => {
+            // Fade out when the page is fully loaded
+            bootScreen.style.animation = 'bootFadeOut 0.5s ease-out forwards';
+            sessionStorage.setItem('systemBooted', 'true');
+            
+            setTimeout(() => {
+              bootScreen.style.display = 'none';
+            }, 500); // Safely remove from DOM after fade completes
+          });
           
+          // Fallback just in case load event never fires or takes way too long
           setTimeout(() => {
-            bootScreen.style.display = 'none';
-          }, 1800); // Safely remove from DOM after sequence completes
+             if (bootScreen && bootScreen.style.display !== 'none') {
+                 bootScreen.style.animation = 'bootFadeOut 0.5s ease-out forwards';
+                 setTimeout(() => { bootScreen.style.display = 'none'; }, 500);
+             }
+          }, 4000);
         }
       }
-    </script> <nav class="w-full border-b border-secondary-accent/30 bg-base-bg/90 backdrop-blur-sm fixed top-0 z-40"> <div class="max-w-[1400px] w-full mx-auto px-4 md:px-8 h-14 flex items-center justify-between font-mono">  <a href="/blog" class="text-primary-accent font-bold text-base md:text-xl hover:text-secondary-accent transition-colors no-underline truncate mr-4">  <span class="hidden sm:inline">guest:~$</span>  <span class="inline sm:hidden">guest:~$</span> </a>  <div class="flex gap-3 md:gap-6 text-body-text-muted text-xs md:text-sm shrink-0"> <a href="/blog#vault-projects" class="hover:text-primary-accent transition-colors">[ ./projects ]</a>  <a href="/blog#vault-logs" class="hover:text-primary-accent transition-colors lg:hidden">[ ./logs ]</a> </div> </div> </nav>  <main class="max-w-[800px] mx-auto px-6 md:px-8 pt-32 pb-24 min-h-[80vh] flex flex-col items-center justify-center text-center"> <h1 class="text-6xl md:text-8xl font-bold text-secondary-accent mb-6 font-mono tracking-tighter text-glow-amber">
+    </script> <nav class="w-full border-b border-secondary-accent/30 bg-base-bg/90 backdrop-blur-sm fixed top-0 z-40"> <div class="max-w-[1400px] w-full mx-auto px-4 md:px-8 h-14 flex items-center justify-between font-mono">  <a href="/blog" class="text-primary-accent font-bold text-base md:text-xl hover:text-secondary-accent transition-colors no-underline truncate mr-4">  <span class="hidden sm:inline">guest:~$</span>  <span class="inline sm:hidden">guest:~$</span> </a> <div class="flex gap-3 md:gap-6 text-body-text-muted text-xs md:text-sm shrink-0"> <a href="/blog#vault-projects" class="hover:text-primary-accent transition-colors">[ ./projects ]</a> <a href="/blogresources" class="hover:text-primary-accent transition-colors">[ ./resources ]</a> </div> </div> </nav>  <main class="max-w-[800px] mx-auto px-6 md:px-8 pt-32 pb-24 min-h-[80vh] flex flex-col items-center justify-center text-center"> <h1 class="text-6xl md:text-8xl font-bold text-secondary-accent mb-6 font-mono tracking-tighter text-glow-amber">
 404
 </h1> <div class="bg-surface-bg border border-secondary-accent/50 p-8 shadow-glow-amber w-full max-w-md"> <p class="font-mono text-primary-accent mb-4 text-lg">>_ FATAL_ERROR: DIRECTORY_NOT_FOUND</p> <p class="text-body-text-muted mb-8 leading-relaxed">
 The requested sector has been corrupted, classified, or wiped from the public databanks.
 </p> <a href="/blog" class="inline-block border-2 border-primary-accent px-6 py-2 text-primary-accent hover:bg-primary-accent hover:text-base-bg transition-colors font-mono font-bold">
 [ RETURN TO ROOT ]
-</a> </div> </main>   <script type="module">
-      let mermaidLoading = false;
-
-      // Wrap the initialization in a function that triggers a dynamic import
-      const loadMermaid = async () => {
-        if (window.mermaid || mermaidLoading) return;
-        mermaidLoading = true;
-        
-        try {
-          const { default: mermaid } = await import('https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs');
-          
-          mermaid.initialize({ 
-            startOnLoad: false, 
-            theme: 'base',
-            themeVariables: {
-              background: '#151515',
-              primaryColor: '#0a1c18',
-              primaryTextColor: '#E0F7FA',
-              primaryBorderColor: '#45FCDB',
-              lineColor: '#45FCDB',
-              secondaryColor: '#D35400',
-              tertiaryColor: '#0B0C10'
-            }
-          });
-          
-          window.mermaid = mermaid;
-          window.dispatchEvent(new Event('mermaid-ready')); // Triggers React to render
-        } catch (error) {
-          console.error("Vault Error: Failed to load diagram rendering engine.", error);
-        }
-      };
-
-      // 1. Check immediately on page load (For public Astro posts)
-      if (document.querySelector('.mermaid') || document.querySelector('pre[data-language="mermaid"]')) {
-        loadMermaid();
-      }
-
-      // 2. Watch the DOM for dynamically added diagrams (For React Vault files)
-      const observer = new MutationObserver((mutations) => {
-        for (const mutation of mutations) {
-          if (mutation.addedNodes.length) {
-            if (document.querySelector('.mermaid')) {
-              loadMermaid();
-              observer.disconnect(); // Stop watching once we trigger the load
-              break;
-            }
-          }
-        }
-      });
-
-      // Start watching the body for changes
-      observer.observe(document.body, { childList: true, subtree: true });
-    </script>  <script>(function(){const ipToken = undefined;
+</a> </div> </main>   <script>(function(){const ipToken = undefined;
 
       async function enrichAndTrack() {
         // 1. Load Umami engine for the BLOG
@@ -111,4 +69,24 @@ The requested sector has been corrupted, classified, or wiped from the public da
       }
 
       enrichAndTrack();
-    })();</script> </body> </html>
+    })();</script> <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+      if (!window.umami) return;
+
+      const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            window.umami.track(`Viewed Section: ${entry.target.id}`);
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.25 }); // Triggers when 25% of the element is visible
+
+      // Watch any element that has the data-track-visibility attribute
+      document.querySelectorAll('[data-track-visibility="true"]').forEach(el => {
+        observer.observe(el);
+      });
+    }, 1500); 
+  });
+</script> </body></html>

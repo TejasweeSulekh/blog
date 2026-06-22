@@ -32,6 +32,7 @@ collections:
       - {label: "Preview Code (Terminal UI)", name: "previewCode", widget: "text", required: false}
       - {label: "Project ID", name: "projectId", widget: "string", required: false, hint: "Give this project a unique ID (e.g., 'fraud-system')."}
       - {label: "Related Project", name: "relatedProject", widget: "string", required: false}
+      - {label: "Parent Reference (ref_pid)", name: "ref_pid", widget: "string", required: false, hint: "Exact string ID of parent to link this to."}
       - {label: "Payload / Markdown Body", name: "body", widget: "markdown"}
 
   - name: "public_blogs"
@@ -53,6 +54,7 @@ collections:
       - {label: "Preview Code (Terminal UI)", name: "previewCode", widget: "text", required: false}
       - {label: "Project ID", name: "projectId", widget: "string", required: false}
       - {label: "Related Project", name: "relatedProject", widget: "string", required: false, hint: "Link to a Project ID if relevant."}
+      - {label: "Parent Reference (ref_pid)", name: "ref_pid", widget: "string", required: false, hint: "Exact string ID of parent to link this to."}
       - {label: "Payload / Markdown Body", name: "body", widget: "markdown"}
 
   - name: "public_logs"
@@ -74,6 +76,29 @@ collections:
       - {label: "Preview Code (Terminal UI)", name: "previewCode", widget: "text", required: false}
       - {label: "Project ID", name: "projectId", widget: "string", required: false}
       - {label: "Related Project", name: "relatedProject", widget: "string", required: false, hint: "Link to a Project ID if relevant."}
+      - {label: "Parent Reference (ref_pid)", name: "ref_pid", widget: "string", required: false, hint: "Exact string ID of parent to link this to."}
+      - {label: "Payload / Markdown Body", name: "body", widget: "markdown"}
+
+  - name: "public_resources"
+    label: "🌐 Public Resources"
+    folder: "src/content/posts/resources"
+    create: true
+    slug: "{{slug}}"
+    extension: "mdx"
+    format: "frontmatter"
+    fields:
+      - {label: "Transmission Title", name: "title", widget: "string"}
+      - {label: "Category", name: "category", widget: "hidden", default: "resource"}
+      - {label: "System Description", name: "description", widget: "text"}
+      - {label: "Timestamp", name: "date", widget: "datetime"}
+      - {label: "Author ID", name: "author", widget: "string", default: "SYS_ADMIN"}
+      - {label: "Cover Image", name: "coverImage", widget: "image", required: false, default: "/default_image_for_blog.png"}
+      - {label: "Tech Stack / Tags", name: "tags", widget: "list", required: false}
+      - {label: "Read Time (Minutes)", name: "readTime", widget: "number", value_type: "int", required: false}
+      - {label: "Preview Code (Terminal UI)", name: "previewCode", widget: "text", required: false}
+      - {label: "Project ID", name: "projectId", widget: "string", required: false}
+      - {label: "Related Project", name: "relatedProject", widget: "string", required: false}
+      - {label: "Parent Reference (ref_pid)", name: "ref_pid", widget: "string", required: false, hint: "Exact string ID of parent to link this to."}
       - {label: "Payload / Markdown Body", name: "body", widget: "markdown"}
 
   # ==========================================
@@ -99,6 +124,7 @@ collections:
       - {label: "Preview Code (Terminal UI)", name: "previewCode", widget: "text", required: false}
       - {label: "Project ID", name: "projectId", widget: "string", required: false, hint: "Give this project a unique ID (e.g., 'fraud-system')."}
       - {label: "Related Project", name: "relatedProject", widget: "string", required: false}
+      - {label: "Parent Reference (ref_pid)", name: "ref_pid", widget: "string", required: false, hint: "Exact string ID of parent to link this to."}
       - {label: "Payload / Markdown Body", name: "body", widget: "markdown"}
 
   - name: "vault_blogs"
@@ -120,6 +146,7 @@ collections:
       - {label: "Preview Code (Terminal UI)", name: "previewCode", widget: "text", required: false}
       - {label: "Project ID", name: "projectId", widget: "string", required: false}
       - {label: "Related Project", name: "relatedProject", widget: "string", required: false, hint: "Link to a Project ID if relevant."}
+      - {label: "Parent Reference (ref_pid)", name: "ref_pid", widget: "string", required: false, hint: "Exact string ID of parent to link this to."}
       - {label: "Payload / Markdown Body", name: "body", widget: "markdown"}
 
   - name: "vault_logs"
@@ -141,4 +168,27 @@ collections:
       - {label: "Preview Code (Terminal UI)", name: "previewCode", widget: "text", required: false}
       - {label: "Project ID", name: "projectId", widget: "string", required: false}
       - {label: "Related Project", name: "relatedProject", widget: "string", required: false, hint: "Link to a Project ID if relevant."}
+      - {label: "Parent Reference (ref_pid)", name: "ref_pid", widget: "string", required: false, hint: "Exact string ID of parent to link this to."}
+      - {label: "Payload / Markdown Body", name: "body", widget: "markdown"}
+
+  - name: "vault_resources"
+    label: "🔒 Vault Resources"
+    folder: "src/content/vault/resources"
+    create: true
+    slug: "{{slug}}"
+    extension: "mdx"
+    format: "frontmatter"
+    fields:
+      - {label: "Transmission Title", name: "title", widget: "string"}
+      - {label: "Category", name: "category", widget: "hidden", default: "resource"}
+      - {label: "System Description", name: "description", widget: "text"}
+      - {label: "Timestamp", name: "date", widget: "datetime"}
+      - {label: "Author ID", name: "author", widget: "string", default: "SYS_ADMIN"}
+      - {label: "Cover Image", name: "coverImage", widget: "image", required: false}
+      - {label: "Tech Stack / Tags", name: "tags", widget: "list", required: false}
+      - {label: "Read Time (Minutes)", name: "readTime", widget: "number", value_type: "int", required: false}
+      - {label: "Preview Code (Terminal UI)", name: "previewCode", widget: "text", required: false}
+      - {label: "Project ID", name: "projectId", widget: "string", required: false}
+      - {label: "Related Project", name: "relatedProject", widget: "string", required: false}
+      - {label: "Parent Reference (ref_pid)", name: "ref_pid", widget: "string", required: false, hint: "Exact string ID of parent to link this to."}
       - {label: "Payload / Markdown Body", name: "body", widget: "markdown"}

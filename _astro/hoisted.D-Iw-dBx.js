@@ -1,0 +1,1 @@
+import{l as o}from"./helpers.Bl1EBtEv.js";import"./preload-helper.B8UsIWFx.js";window.addEventListener("mermaid-blocks-ready",async()=>{if(document.querySelector(".mermaid")){const r=await o();r&&r.run({querySelector:".mermaid",suppressErrors:!0}).catch(e=>console.error("Mermaid error:",e))}});
